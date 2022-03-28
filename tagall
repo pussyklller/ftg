@@ -5,12 +5,12 @@ import random
 import socket
 
 def register(cb):
-    cb(TagallMod())
-class Tagallv2Mod(loader.Module):
+    cb(Xyimod())
+class TagAll(loader.Module):
     """Tag"""
-    strings = {'name': 'tag'}
+    strings = {'name': 'TagAll'}
     async def tcmd(self, event):
-        """Tag"""
+        """_t number"""
         global text
         try:
             mentions = ""
