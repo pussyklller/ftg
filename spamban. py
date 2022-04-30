@@ -1,0 +1,26 @@
+from .. import loader, utils 
+from telethon import events 
+from telethon.errors.rpcerrorlist import YouBlockedUserError 
+from asyncio.exceptions import TimeoutError 
+ 
+def register(cb):
+    cb(spambanMOD())
+
+class spambanMod(loader.Module): 
+    """Модуль для проверки своего аккаунта на спамбан""" 
+    strings = {'name': 'Spamban_check'} 
+ 
+    async def spmcmd(self, message):
+        """"Используй .spm"""
+        chat = "@spambot"
+        await message.edit("<b>😎 Проверяю аккаунт на спамбан...</b>")
+        async with message.client.conversation(chat) as conv: 
+            try:
+                response = conv.wait_event(events.NewMessage(incoming=True, from_users=178220800))
+                await message.client.send_message(chat, "/start") 
+                response = await response
+            except YouBlockedUserError:
+                await message.edit("<b>😶‍🌫️ Разблокируй @spambot</b>")
+                return
+            await message.delete() 
+            await message.client.send_message(message.to_id, response.text) 
